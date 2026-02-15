@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Table {
+  id       Int      @id @default(autoincrement())
+  number   Int      @unique  // Número de mesa (1, 2, 3...)
+  capacity Int                // Capacidad (2, 4, 6 personas)
+  
+  reservations Reservation[]
+  
+  createdAt DateTime @default(now())
+}
+
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  
+  // Datos del cliente
+  name      String
+  email     String
+  phone     String
+  
+  // Datos de la reserva
+  date      DateTime           // Fecha y hora de la reserva
+  guests    Int                // Número de comensales
+  duration  Int @default(120)  // Duración en minutos (default 2h)
+  
+  status    ReservationStatus @default(PENDING)
+  
+  // Relación con mesa
+  tableId   Int
+  table     Table @relation(fields: [tableId], references: [id])
+  
+  notes     String?  // Notas especiales (alergias, etc)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ReservationStatus {
+  PENDING    // Pendiente de confirmar
+  CONFIRMED  // Confirmada
+  CANCELLED  // Cancelada
+  COMPLETED  // Completada (ya pasó)
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String  // Hash, nunca en claro
+  name     String
+  
+  createdAt DateTime @default(now())
+}
