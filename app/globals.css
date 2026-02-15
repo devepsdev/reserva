@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #d97706; /* amber-600 */
+  --color-brand-secondary: #92400e; /* amber-800 */
+  --color-brand-light: #fef3c7; /* amber-100 */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 250, 245; /* Soft amber tint */
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}

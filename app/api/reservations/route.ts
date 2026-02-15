@@ -35,7 +35,48 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
-    
+
+    // Validar campos requeridos
+    if (!body.name || !body.email || !body.phone || !body.date || !body.guests) {
+      return NextResponse.json(
+        { error: "Campos requeridos: name, email, phone, date, guests, tableId" },
+        { status: 400 }
+      );
+    }
+
+    // Validar capacidad de la mesa
+    if (table.capacity < body.guests) {
+      return NextResponse.json(
+        { error: `La mesa ${table.number} tiene capacidad para ${table.capacity} personas` },
+        { status: 400 }
+      );
+    }
+
+    // Verificar solapamiento de horarios
+    const duration = body.duration || 120;
+    const reservationStart = new Date(body.date);
+    const reservationEnd = new Date(reservationStart.getTime() + duration * 60000);
+
+    const tableReservations = await prisma.reservation.findMany({
+      where: {
+        tableId: body.tableId,
+        status: { not: "CANCELLED" },
+      },
+    });
+
+    const hasOverlap = tableReservations.some((res) => {
+      const existingStart = new Date(res.date);
+      const existingEnd = new Date(existingStart.getTime() + res.duration * 60000);
+      return reservationStart < existingEnd && reservationEnd > existingStart;
+    });
+
+    if (hasOverlap) {
+      return NextResponse.json(
+        { error: "La mesa no está disponible en ese horario" },
+        { status: 409 }
+      );
+    }
+
     // Crear la reserva
     const reservation = await prisma.reservation.create({
       data: {
