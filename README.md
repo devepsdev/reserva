@@ -1,4 +1,4 @@
-# Sabor Autentico - Sistema de Reservas
+# Sabor Auténtico - Sistema de Reservas
 
 Sistema full-stack de reservas para restaurante construido con Next.js, Prisma y PostgreSQL. Incluye una interfaz publica para que los clientes reserven mesas y un panel de administracion para gestionar las reservas.
 
