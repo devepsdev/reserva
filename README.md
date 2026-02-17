@@ -1,12 +1,12 @@
 # Sabor Auténtico - Sistema de Reservas
 
-Sistema full-stack de reservas para restaurante construido con Next.js, Prisma y PostgreSQL. Incluye una interfaz publica para que los clientes reserven mesas y un panel de administracion para gestionar las reservas.
+Sistema full-stack de reservas para restaurante construido con Next.js, Prisma y PostgreSQL. Incluye una interfaz pública para que los clientes reserven mesas y un panel de administración para gestionar las reservas.
 
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router, TypeScript)
 - **Base de datos:** PostgreSQL + Prisma 7
-- **Autenticacion:** NextAuth.js (JWT + Credentials)
+- **Autenticación:** NextAuth.js (JWT + Credentials)
 - **UI:** Tailwind CSS 4, Framer Motion, Lucide Icons
 
 ## Estructura del proyecto
@@ -16,34 +16,34 @@ app/
   api/
     reservations/          # CRUD de reservas + disponibilidad
     tables/                # Listado de mesas
-    auth/[...nextauth]/    # Autenticacion NextAuth
+    auth/[...nextauth]/    # Autenticación NextAuth
     admin/login/           # Login de administrador
   admin/
     page.tsx               # Login admin
-    dashboard/page.tsx     # Panel de administracion
+    dashboard/page.tsx     # Panel de administración
   components/              # Hero, Navbar, ReservationSection, Footer...
-  page.tsx                 # Pagina principal
+  page.tsx                 # Página principal
 lib/
-  auth.ts                  # Configuracion NextAuth
+  auth.ts                  # Configuración NextAuth
   prisma.ts                # Cliente Prisma
 prisma/
   schema.prisma            # Esquema de base de datos
 scripts/
   seed-admin.ts            # Seed del usuario admin
-middleware.ts              # Proteccion de rutas /admin
+middleware.ts              # Protección de rutas /admin
 ```
 
 ## Modelos de datos
 
-- **Table** - Mesas del restaurante (numero, capacidad)
-- **Reservation** - Reservas (nombre, email, telefono, fecha, invitados, duracion, estado, notas)
+- **Table** - Mesas del restaurante (número, capacidad)
+- **Reservation** - Reservas (nombre, email, teléfono, fecha, invitados, duración, estado, notas)
 - **Admin** - Usuarios administradores (email, password bcrypt)
 
 Estados de reserva: `PENDING` → `CONFIRMED` → `COMPLETED` | `CANCELLED`
 
 ## API Endpoints
 
-| Endpoint | Metodo | Descripcion |
+| Endpoint | Método | Descripción |
 |---|---|---|
 | `/api/reservations` | GET | Listar todas las reservas |
 | `/api/reservations` | POST | Crear nueva reserva |
@@ -88,26 +88,26 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
 
 ## Scripts disponibles
 
-| Script | Descripcion |
+| Script | Descripción |
 |---|---|
 | `npm run dev` | Servidor de desarrollo |
-| `npm run build` | Build de produccion |
-| `npm run start` | Servidor de produccion |
+| `npm run build` | Build de producción |
+| `npm run start` | Servidor de producción |
 | `npm run lint` | Ejecutar ESLint |
 | `npm run seed:admin` | Crear usuario admin por defecto |
 
 ## Funcionalidades
 
-**Publico:**
+**Público:**
 
-- Busqueda de mesas disponibles por fecha, hora y numero de invitados
-- Formulario de reserva en 4 pasos (buscar, seleccionar mesa, datos personales, confirmacion)
-- Deteccion de solapamiento de horarios
+- Búsqueda de mesas disponibles por fecha, hora y número de invitados
+- Formulario de reserva en 4 pasos (buscar, seleccionar mesa, datos personales, confirmación)
+- Detección de solapamiento de horarios
 
 **Admin (`/admin`):**
 
 - Login seguro con credenciales
-- Dashboard con estadisticas (reservas de hoy, pendientes, confirmadas, total)
+- Dashboard con estadísticas (reservas de hoy, pendientes, confirmadas, total)
 - Filtrado por fecha y estado
-- Gestion de estados de reserva (confirmar, completar, cancelar)
-- Eliminacion de reservas
+- Gestión de estados de reserva (confirmar, completar, cancelar)
+- Eliminación de reservas
