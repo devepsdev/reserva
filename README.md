@@ -111,3 +111,18 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
 - Filtrado por fecha y estado
 - Gestión de estados de reserva (confirmar, completar, cancelar)
 - Eliminación de reservas
+
+---
+
+## 👨‍💻 Autor
+
+**DevEps** - Desarrollador Full Stack
+
+- GitHub: [github.com/devepsdev](https://github.com/devepsdev)
+- Portfolio: [deveps.ddns.net](https://deveps.ddns.net)
+- Email: devepsdev@gmail.com
+- LinkedIn: [www.linkedin.com/in/enrique-perez-sanchez](https://www.linkedin.com/in/enrique-perez-sanchez/)
+
+---
+
+⭐ ¡Dale una estrella si el proyecto te ha resultado útil!
