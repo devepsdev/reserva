@@ -66,8 +66,19 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-500 space-y-2">
           <p>© {new Date().getFullYear()} Sabor Auténtico. Todos los derechos reservados.</p>
+          <p>
+            © 2026 Sabor Auténtico — Proyecto demo por{" "}
+            <a
+              href="https://deveps.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-500 hover:text-amber-400 transition-colors"
+            >
+              DevEps
+            </a>
+          </p>
         </div>
       </div>
     </footer>

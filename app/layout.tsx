@@ -30,10 +30,72 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 flex flex-col min-h-screen`}
       >
+        {/* Banner demo DevEps */}
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 9999,
+          backgroundColor: "#1a1a2e",
+          color: "white",
+          fontSize: "13px",
+          textAlign: "center",
+          padding: "8px 16px",
+        }}>
+          Esto es un proyecto de demostración de{" "}
+          <a
+            href="https://deveps.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#FF6B00", fontWeight: 600, textDecoration: "none" }}
+          >
+            DevEps
+          </a>
+          {" — "}
+          <a
+            href="https://deveps.dev/#contacto"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            ¿Quieres una web así para tu restaurante?
+          </a>
+        </div>
+
+        {/* Botón flotante DevEps */}
+        <a
+          href="https://deveps.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            position: "fixed",
+            bottom: "24px",
+            left: "24px",
+            zIndex: 9999,
+            backgroundColor: "#FF6B00",
+            color: "white",
+            padding: "8px 16px",
+            borderRadius: "9999px",
+            fontSize: "14px",
+            fontWeight: 600,
+            textDecoration: "none",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+            transition: "box-shadow 0.2s",
+          }}
+          onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(255,107,0,0.5)")}
+          onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)")}
+        >
+          ← DevEps
+        </a>
+
         <SessionProvider>
-          <Navbar />
-          <main className="flex-grow pt-0">{children}</main>
-          <Footer />
+          {/* padding-top para compensar el banner fijo (≈37px) */}
+          <div style={{ paddingTop: "37px" }}>
+            <Navbar />
+            <main className="flex-grow pt-0">{children}</main>
+            <Footer />
+          </div>
         </SessionProvider>
       </body>
     </html>
