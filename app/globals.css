@@ -12,6 +12,10 @@
   }
 }
 
+.deveps-float-btn:hover {
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.5) !important;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 250, 245; /* Soft amber tint */

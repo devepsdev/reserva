@@ -68,6 +68,7 @@ export default function RootLayout({
           href="https://deveps.dev"
           target="_blank"
           rel="noopener noreferrer"
+          className="deveps-float-btn"
           style={{
             position: "fixed",
             bottom: "24px",
@@ -83,8 +84,6 @@ export default function RootLayout({
             boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
             transition: "box-shadow 0.2s",
           }}
-          onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(255,107,0,0.5)")}
-          onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)")}
         >
           ← DevEps
         </a>
