@@ -17,7 +17,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center pb-16 sm:pb-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -58,10 +58,10 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white flex flex-col items-center gap-2"
+        className="absolute bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2 text-white flex flex-col items-center gap-1 sm:gap-2"
       >
-        <span className="text-sm font-light tracking-widest text-white/70">DESCUBRE MÁS</span>
-        <div className="w-px h-16 bg-gradient-to-b from-amber-500 to-transparent" />
+        <span className="text-xs sm:text-sm font-light tracking-widest text-white/70">DESCUBRE MÁS</span>
+        <div className="w-px h-10 sm:h-16 bg-gradient-to-b from-amber-500 to-transparent" />
       </motion.div>
     </section>
   );
