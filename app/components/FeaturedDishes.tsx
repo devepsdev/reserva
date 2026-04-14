@@ -7,19 +7,19 @@ const dishes = [
     name: "Ceviche de la Casa",
     description: "Pesca del día con leche de tigre al ají amarillo, camote glaseado y maíz chulpi.",
     price: "$24",
-    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cebiche_de_corvina.JPG/960px-Cebiche_de_corvina.JPG"
   },
   {
     name: "Lomo Saltado Premium",
     description: "Cortes seleccionados de res, flameados al wok con tomates cherry, cebolla morada y papas andinas.",
     price: "$32",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Lomo_Saltado_-_Lima%2C_Peru_Miraflores_%28Tiendecita_Blanca%29.jpg/960px-Lomo_Saltado_-_Lima%2C_Peru_Miraflores_%28Tiendecita_Blanca%29.jpg"
   },
   {
     name: "Risotto de Hongos",
     description: "Arroz arborio cremoso con selección de setas silvestres, trufa negra y parmesano reggiano.",
     price: "$28",
-    image: "https://images.unsplash.com/photo-1633964913295-ceb43825efe4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Risotto_with_speck_and_goat_cheese_%286101067436%29.jpg/960px-Risotto_with_speck_and_goat_cheese_%286101067436%29.jpg"
   }
 ];
 
