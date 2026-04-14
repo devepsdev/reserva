@@ -3,6 +3,8 @@
 import Hero from "@/app/components/Hero";
 import ScrollRevealSection from "@/app/components/ScrollRevealSection";
 import ReservationSection from "@/app/components/ReservationSection";
+import FeaturedDishes from "@/app/components/FeaturedDishes";
+import TestimonialSection from "@/app/components/TestimonialSection";
 
 export default function HomePage() {
   return (
@@ -26,6 +28,8 @@ export default function HomePage() {
         />
       </div>
 
+      <FeaturedDishes />
+
       <div id="menu">
          <ScrollRevealSection
           title="Carta de Autor"
@@ -34,6 +38,8 @@ export default function HomePage() {
           alignment="left"
         />
       </div>
+
+      <TestimonialSection />
 
       <ReservationSection />
     </>

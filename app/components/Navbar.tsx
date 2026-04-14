@@ -23,7 +23,7 @@ export default function Navbar() {
       className={cn(
         "fixed top-[37px] left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm py-4"
+          ? "bg-white shadow-sm py-4 md:bg-white/90 md:backdrop-blur-md"
           : "bg-transparent py-6"
       )}
     >
@@ -65,7 +65,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 overflow-hidden"
+            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-4 py-6 space-y-4 flex flex-col items-center">
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>
