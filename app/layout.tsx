@@ -27,6 +27,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="scroll-smooth" data-scroll-behavior="smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{__html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Restaurant",
+            "name": "Sabor Auténtico",
+            "description": "Restaurante de cocina de autor en Barcelona. Reservas online.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Calle Gastronomía 123",
+              "addressLocality": "Barcelona",
+              "addressCountry": "ES"
+            },
+            "servesCuisine": "Cocina de autor",
+            "url": "https://reserva-deveps.vercel.app",
+            "priceRange": "€€€"
+          })}}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 flex flex-col min-h-screen`}
       >

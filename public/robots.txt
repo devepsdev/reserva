@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://reserva-deveps.vercel.app/sitemap.xml
