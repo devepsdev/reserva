@@ -5,20 +5,20 @@ import { motion } from "framer-motion";
 const dishes = [
   {
     name: "Ceviche de la Casa",
-    description: "Pesca del dÃ­a con leche de tigre al ajÃ­ amarillo, camote glaseado y maÃ­z chulpi.",
-    price: "$24",
+    description: "Pesca del día con leche de tigre al ají amarillo, camote glaseado y maíz chulpi.",
+    price: "24 €",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cebiche_de_corvina.JPG/960px-Cebiche_de_corvina.JPG"
   },
   {
     name: "Lomo Saltado Premium",
     description: "Cortes seleccionados de res, flameados al wok con tomates cherry, cebolla morada y papas andinas.",
-    price: "$32",
+    price: "32 €",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Lomo_Saltado_-_Lima%2C_Peru_Miraflores_%28Tiendecita_Blanca%29.jpg/960px-Lomo_Saltado_-_Lima%2C_Peru_Miraflores_%28Tiendecita_Blanca%29.jpg"
   },
   {
     name: "Risotto de Hongos",
-    description: "Arroz arborio cremoso con selecciÃ³n de setas silvestres, trufa negra y parmesano reggiano.",
-    price: "$28",
+    description: "Arroz arborio cremoso con selección de setas silvestres, trufa negra y parmesano reggiano.",
+    price: "28 €",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Risotto_with_speck_and_goat_cheese_%286101067436%29.jpg/960px-Risotto_with_speck_and_goat_cheese_%286101067436%29.jpg"
   }
 ];

@@ -5,19 +5,19 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    text: "La experiencia gastronÃ³mica superÃ³ todas nuestras expectativas. Cada plato cuenta una historia diferente. El ambiente es Ã­ntimo y elegante.",
-    author: "MarÃ­a Elena R.",
-    role: "CrÃ­tica GastronÃ³mica",
+    text: "La experiencia gastronómica superó todas nuestras expectativas. Cada plato cuenta una historia diferente. El ambiente es íntimo y elegante.",
+    author: "María Elena R.",
+    role: "Crítica Gastronómica",
     rating: 5
   },
   {
-    text: "Celebramos nuestro aniversario y no podrÃ­amos haber elegido un lugar mejor. El trato del personal es excepcional y la carta de vinos espectacular.",
+    text: "Celebramos nuestro aniversario y no podríamos haber elegido un lugar mejor. El trato del personal es excepcional y la carta de vinos espectacular.",
     author: "Carlos De la Fuente",
     role: "Cliente Frecuente",
     rating: 5
   },
   {
-    text: "Una joya oculta de la ciudad. La fusiÃ³n de sabores tradicionales con tÃ©cnicas modernas nos dejÃ³ sin palabras. Volveremos pronto.",
+    text: "Una joya oculta de la ciudad. La fusión de sabores tradicionales con técnicas modernas nos dejó sin palabras. Volveremos pronto.",
     author: "Ana y David",
     role: "Viajeros",
     rating: 5
