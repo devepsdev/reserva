@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface ScrollRevealSectionProps {
@@ -20,25 +20,29 @@ export default function ScrollRevealSection({
   className,
 }: ScrollRevealSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const xMove = useTransform(
+  const yMove = useTransform(
     scrollYProgress,
     [0, 1],
-    alignment === "left" ? [-100, 100] : [100, -100]
+    reduceMotion ? [0, 0] : [alignment === "left" ? 30 : -30, alignment === "left" ? -30 : 30]
   );
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    reduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]
+  );
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], reduceMotion ? [1, 1, 1] : [0.96, 1, 0.96]);
 
   return (
     <section
       ref={containerRef}
       className={cn(
-        "relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20 px-4",
+        "relative flex min-h-[78vh] items-center justify-center overflow-hidden px-5 py-24 sm:px-8 lg:py-32",
         className
       )}
     >
@@ -47,15 +51,19 @@ export default function ScrollRevealSection({
         <motion.div
           style={{ opacity }}
           className={cn(
-            "p-8 z-10",
+            "z-10 px-1 py-4 sm:px-5 lg:py-8",
             alignment === "left" ? "md:order-2" : "md:order-1"
           )}
         >
-          <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-amber-100">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6 font-display">
+          <div className="max-w-xl">
+            <span className="mb-5 block text-xs font-semibold uppercase tracking-[.24em] text-[#a65230]">
+              Sabor Auténtico <span className="mx-2 text-stone-300">/</span> Hecho con intención
+            </span>
+            <h2 className="font-editorial mb-6 text-5xl leading-[1.02] tracking-[-.035em] text-[#30251f] sm:text-6xl">
               {title}
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed text-balance">
+            <div className="mb-6 h-px w-16 bg-[#bf7047]" />
+            <p className="text-lg leading-8 text-[#716860] text-balance">
               {description}
             </p>
           </div>
@@ -63,17 +71,21 @@ export default function ScrollRevealSection({
 
         {/* Image Content */}
         <motion.div
-          style={{ x: xMove, scale, opacity }}
+          style={{ y: yMove, scale, opacity }}
           className={cn(
-            "relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl",
+            "group relative aspect-[5/4] overflow-hidden rounded-[2rem] shadow-[0_35px_90px_rgba(44,31,22,.18)] md:aspect-[4/3]",
             alignment === "left" ? "md:order-1" : "md:order-2"
           )}
         >
           <div
-            className="absolute inset-0 bg-cover bg-center transition-transform hover:scale-110 duration-700"
+            aria-hidden="true"
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
             style={{ backgroundImage: `url(${imageSrc})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#201914]/55 via-transparent to-white/5" />
+          <div className="absolute bottom-5 left-5 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-medium tracking-wide text-white backdrop-blur-md sm:bottom-7 sm:left-7">
+            Del origen a tu mesa
+          </div>
         </motion.div>
       </div>
     </section>

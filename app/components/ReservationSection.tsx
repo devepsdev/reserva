@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface Table {
   id: number;
@@ -10,6 +10,7 @@ interface Table {
 }
 
 export default function ReservationSection() {
+  const reduceMotion = useReducedMotion();
   const [step, setStep] = useState<"search" | "select" | "form" | "success">("search");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -109,33 +110,37 @@ export default function ReservationSection() {
   };
 
   return (
-    <section id="reservas" className="py-20 bg-amber-50/50">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Reserva tu Mesa</h2>
-          <p className="text-gray-600">Asegura tu experiencia gastronómica con nosotros</p>
+    <section id="reservas" className="relative overflow-hidden bg-[#f2e9df] py-24 sm:py-32">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-28 -top-32 h-96 w-96 rounded-full border border-[#d8c6b6] sm:-right-12" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 h-64 w-64 rounded-full border border-[#d8c6b6]" />
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <span className="mb-4 block text-xs font-semibold uppercase tracking-[.25em] text-[#a65230]">Tu próxima historia empieza aquí</span>
+          <h2 className="font-editorial mb-4 text-5xl tracking-[-.04em] text-[#30251f] sm:text-6xl">Reserva tu mesa</h2>
+          <p className="text-[#716860]">Asegura tu experiencia gastronómica con nosotros</p>
         </div>
 
         {/* Progress indicator */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <div role="list" aria-label="Progreso de la reserva" className="mb-8 flex items-center justify-center gap-2">
           {["Buscar", "Elegir mesa", "Datos", "Confirmado"].map((label, i) => {
             const steps = ["search", "select", "form", "success"];
             const currentIndex = steps.indexOf(step);
             const isActive = i <= currentIndex;
             return (
-              <div key={label} className="flex items-center gap-2">
+              <div key={label} role="listitem" className="flex items-center gap-2">
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                  aria-current={i === currentIndex ? "step" : undefined}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
                     isActive
-                      ? "bg-amber-600 text-white"
-                      : "bg-gray-200 text-gray-500"
+                      ? "bg-[#b85b32] text-white shadow-md shadow-[#b85b32]/20"
+                      : "bg-[#e1d7cd] text-[#786d65]"
                   }`}
                 >
                   {i + 1}
                 </div>
                 <span
                   className={`text-sm hidden sm:inline transition-colors ${
-                    isActive ? "text-amber-700 font-medium" : "text-gray-400"
+                    isActive ? "font-semibold text-[#8e4327]" : "text-[#9a8f86]"
                   }`}
                 >
                   {label}
@@ -143,7 +148,7 @@ export default function ReservationSection() {
                 {i < 3 && (
                   <div
                     className={`w-8 h-0.5 transition-colors ${
-                      i < currentIndex ? "bg-amber-600" : "bg-gray-200"
+                      i < currentIndex ? "bg-[#b85b32]" : "bg-[#d8cbc0]"
                     }`}
                   />
                 )}
@@ -153,59 +158,62 @@ export default function ReservationSection() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div role="alert" className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-800">
             {error}
           </div>
         )}
 
         <motion.div
           key={step}
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
+          exit={reduceMotion ? undefined : { opacity: 0, y: -20 }}
+          transition={{ duration: reduceMotion ? 0 : 0.3 }}
         >
           {/* Step 1: Search */}
           {step === "search" && (
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
+            <div className="rounded-3xl border border-white/80 bg-[#fffdfa] p-6 shadow-[0_25px_70px_rgba(67,45,29,.09)] md:p-9">
+              <h2 className="mb-6 text-xl font-semibold text-[#30251f]">
                 Buscar disponibilidad
               </h2>
               <form onSubmit={searchAvailability} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="reservation-date" className="mb-1 block text-sm font-medium text-[#544a43]">
                       Fecha
                     </label>
                     <input
                       type="date"
+                      id="reservation-date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       min={new Date().toISOString().split("T")[0]}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                      className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="reservation-time" className="mb-1 block text-sm font-medium text-[#544a43]">
                       Hora
                     </label>
                     <input
                       type="time"
+                      id="reservation-time"
                       value={time}
                       onChange={(e) => setTime(e.target.value)}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                      className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="reservation-guests" className="mb-1 block text-sm font-medium text-[#544a43]">
                       Personas
                     </label>
                     <select
+                      id="reservation-guests"
                       value={guests}
                       onChange={(e) => setGuests(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                      className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                     >
                       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                         <option key={n} value={n}>
@@ -218,7 +226,7 @@ export default function ReservationSection() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full sm:w-auto px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors shadow-md hover:shadow-lg"
+                  className="w-full rounded-full bg-[#b85b32] px-7 py-3.5 font-semibold text-white shadow-lg shadow-[#b85b32]/20 transition hover:-translate-y-0.5 hover:bg-[#8e4327] disabled:opacity-50 sm:w-auto"
                 >
                   {loading ? "Buscando..." : "Buscar mesas disponibles"}
                 </button>
@@ -228,19 +236,19 @@ export default function ReservationSection() {
 
           {/* Step 2: Select table */}
           {step === "select" && (
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="rounded-3xl border border-white/80 bg-[#fffdfa] p-6 shadow-[0_25px_70px_rgba(67,45,29,.09)] md:p-9">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-[#30251f]">
                   Mesas disponibles
                 </h2>
                 <button
                   onClick={() => setStep("search")}
-                  className="text-sm text-amber-600 hover:text-amber-700 font-medium"
+                  className="text-sm font-semibold text-[#a65230] underline-offset-4 hover:underline"
                 >
                   ← Cambiar búsqueda
                 </button>
               </div>
-              <p className="text-gray-600 mb-4 bg-gray-50 p-3 rounded-lg inline-block">
+              <p className="mb-5 inline-block rounded-full border border-[#e9ddd2] bg-[#f8f2ec] px-4 py-2 text-sm text-[#665a50]">
                 {date} a las {time} — {guests}{" "}
                 {guests === 1 ? "persona" : "personas"}
               </p>
@@ -249,12 +257,12 @@ export default function ReservationSection() {
                   <button
                     key={table.id}
                     onClick={() => selectTable(table)}
-                    className="p-4 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition-all text-left group"
+                    className="group rounded-2xl border border-[#e6d9ce] bg-white p-5 text-left transition-all hover:-translate-y-1 hover:border-[#bf7047] hover:bg-[#fff9f4] hover:shadow-lg"
                   >
-                    <div className="text-lg font-semibold text-gray-900 group-hover:text-amber-700">
+                    <div className="text-lg font-semibold text-[#30251f] group-hover:text-[#a65230]">
                       Mesa {table.number}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="mt-1 text-sm text-[#716860]">
                       Capacidad: {table.capacity} personas
                     </div>
                   </button>
@@ -265,21 +273,21 @@ export default function ReservationSection() {
 
           {/* Step 3: Reservation form */}
           {step === "form" && (
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="rounded-3xl border border-white/80 bg-[#fffdfa] p-6 shadow-[0_25px_70px_rgba(67,45,29,.09)] md:p-9">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-[#30251f]">
                   Completa tu reserva
                 </h2>
                 <button
                   onClick={() => setStep("select")}
-                  className="text-sm text-amber-600 hover:text-amber-700 font-medium"
+                  className="text-sm font-semibold text-[#a65230] underline-offset-4 hover:underline"
                 >
                   ← Cambiar mesa
                 </button>
               </div>
 
-              <div className="bg-amber-50 rounded-lg p-4 mb-6 border border-amber-100">
-                <p className="text-sm text-amber-800">
+              <div className="mb-6 rounded-2xl border border-[#ead6c7] bg-[#fbf1e9] p-4">
+                <p className="text-sm text-[#713c2b]">
                   <strong>Mesa {selectedTable?.number}</strong> — {date} a las{" "}
                   {time} — {guests} {guests === 1 ? "persona" : "personas"}
                 </p>
@@ -287,58 +295,62 @@ export default function ReservationSection() {
 
               <form onSubmit={submitReservation} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="reservation-name" className="mb-1 block text-sm font-medium text-[#544a43]">
                     Nombre completo
                   </label>
                   <input
                     type="text"
+                    id="reservation-name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                    className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="reservation-email" className="mb-1 block text-sm font-medium text-[#544a43]">
                       Email
                     </label>
                     <input
                       type="email"
+                      id="reservation-email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                      className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="reservation-phone" className="mb-1 block text-sm font-medium text-[#544a43]">
                       Teléfono
                     </label>
                     <input
                       type="tel"
+                      id="reservation-phone"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                      className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="reservation-notes" className="mb-1 block text-sm font-medium text-[#544a43]">
                     Notas especiales (alergias, celebraciones, etc.)
                   </label>
                   <textarea
+                    id="reservation-notes"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-shadow"
+                    className="w-full rounded-xl border border-[#ddd2c7] bg-white px-4 py-3 text-[#29231f] outline-none transition-shadow focus:border-[#b85b32] focus:ring-2 focus:ring-[#b85b32]/20"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors shadow-md hover:shadow-lg"
+                  className="w-full rounded-full bg-[#b85b32] px-7 py-3.5 font-semibold text-white shadow-lg shadow-[#b85b32]/20 transition hover:-translate-y-0.5 hover:bg-[#8e4327] disabled:opacity-50"
                 >
                   {loading ? "Reservando..." : "Confirmar reserva"}
                 </button>
@@ -348,10 +360,10 @@ export default function ReservationSection() {
 
           {/* Step 4: Success */}
           {step === "success" && (
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 text-center border border-gray-100">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <div role="status" aria-live="polite" className="rounded-3xl border border-white/80 bg-[#fffdfa] p-6 text-center shadow-[0_25px_70px_rgba(67,45,29,.09)] md:p-9">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e8f1e7]">
                 <svg
-                  className="w-8 h-8 text-green-600"
+                  className="h-8 w-8 text-green-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -364,28 +376,28 @@ export default function ReservationSection() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+              <h2 className="font-editorial mb-2 text-3xl font-semibold text-[#30251f]">
                 ¡Reserva confirmada!
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="mb-6 text-[#716860]">
                 Te esperamos con los brazos abiertos. Hemos enviado los detalles a tu email.
               </p>
-              <div className="bg-gray-50 rounded-lg p-4 mb-6 inline-block text-left border border-gray-200">
-                <p className="text-sm text-gray-700">
+              <div className="mb-6 inline-block rounded-2xl border border-[#e9ddd2] bg-[#f8f2ec] p-4 text-left">
+                <p className="text-sm text-[#544a43]">
                   <strong>Mesa {selectedTable?.number}</strong>
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-[#544a43]">
                   {date} a las {time}
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-[#544a43]">
                   {guests} {guests === 1 ? "persona" : "personas"}
                 </p>
-                <p className="text-sm text-gray-700">{name}</p>
+                <p className="text-sm text-[#544a43]">{name}</p>
               </div>
               <div>
                 <button
                   onClick={reset}
-                  className="px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors shadow-md"
+                  className="rounded-full bg-[#b85b32] px-7 py-3.5 font-semibold text-white shadow-lg transition hover:bg-[#8e4327]"
                 >
                   Hacer otra reserva
                 </button>

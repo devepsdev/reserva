@@ -20,31 +20,32 @@ export default function Navbar() {
 
   return (
     <nav
+      aria-label="Navegación principal"
       className={cn(
-        "fixed top-[37px] left-0 right-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 top-[37px] z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm py-4"
-          : "bg-transparent py-6"
+          ? "bg-[#fbf8f3]/95 py-3 shadow-[0_8px_30px_rgba(44,31,22,.08)] backdrop-blur-xl"
+          : "bg-transparent py-5 sm:py-6"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-amber-600 p-2 rounded-lg text-white group-hover:bg-amber-700 transition-colors">
+          <Link href="/" aria-label="Sabor Auténtico, inicio" className="group flex items-center gap-3">
+            <div className="rounded-xl bg-[#b85b32] p-2.5 text-white shadow-lg shadow-[#b85b32]/20 transition-colors group-hover:bg-[#8e4327]">
               <UtensilsCrossed size={24} />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">
-              Sabor <span className="text-amber-600">Auténtico</span>
+            <span className={cn("text-lg font-semibold tracking-tight transition-colors sm:text-xl", scrolled ? "text-[#29231f]" : "text-white")}>
+              Sabor <span className={scrolled ? "text-[#b85b32]" : "text-[#e3a36d]"}>Auténtico</span>
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <NavLink href="/">Inicio</NavLink>
-            <NavLink href="/#menu">Menú</NavLink>
-            <NavLink href="/#story">Historia</NavLink>
+            <NavLink href="/" scrolled={scrolled}>Inicio</NavLink>
+            <NavLink href="/#menu" scrolled={scrolled}>Menú</NavLink>
+            <NavLink href="/#story" scrolled={scrolled}>Historia</NavLink>
             <Link
               href="/#reservas"
-              className="px-6 py-2.5 bg-amber-600 text-white font-medium rounded-full hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/20"
+              className="rounded-full bg-[#b85b32] px-6 py-3 font-semibold text-white shadow-lg shadow-[#b85b32]/20 transition-all hover:-translate-y-0.5 hover:bg-[#8e4327]"
             >
               Reservar Mesa
             </Link>
@@ -52,7 +53,11 @@ export default function Navbar() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-700 hover:text-amber-600 transition-colors"
+            type="button"
+            aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+            className={cn("rounded-lg p-2 transition-colors focus-visible:outline-offset-2 md:hidden", scrolled ? "text-[#29231f] hover:text-[#b85b32]" : "text-white hover:text-[#e3a36d]")}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -65,7 +70,8 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 overflow-hidden"
+            id="mobile-navigation"
+            className="overflow-hidden border-t border-[#eadfd4] bg-[#fbf8f3]/95 backdrop-blur-xl md:hidden"
           >
             <div className="px-4 py-6 space-y-4 flex flex-col items-center">
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>
@@ -95,17 +101,22 @@ export default function Navbar() {
 function NavLink({
   href,
   children,
+  scrolled,
 }: {
   href: string;
   children: React.ReactNode;
+  scrolled: boolean;
 }) {
   return (
     <Link
       href={href}
-      className="text-gray-600 hover:text-amber-600 font-medium transition-colors relative group"
+      className={cn(
+        "group relative font-medium transition-colors",
+        scrolled ? "text-[#5c5149] hover:text-[#b85b32]" : "text-white/85 hover:text-white"
+      )}
     >
       {children}
-      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full" />
+      <span className={cn("absolute -bottom-1 left-0 h-0.5 w-0 transition-all group-hover:w-full", scrolled ? "bg-[#b85b32]" : "bg-[#e3a36d]")} />
     </Link>
   );
 }

@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Reservas - Restaurante",
-  description: "Sistema de reservas para restaurante",
+  title: "Sabor Auténtico | Cocina de temporada",
+  description: "Reserva tu mesa y disfruta de una cocina de temporada con producto local en Sabor Auténtico.",
 };
 
 export default function RootLayout({
@@ -28,8 +28,14 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth" data-scroll-behavior="smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fbf8f3] flex flex-col min-h-screen`}
       >
+        <a
+          href="#main-content"
+          className="fixed left-4 top-[-100px] z-[10001] rounded-full bg-[#29231f] px-5 py-3 font-semibold text-white transition-[top] focus:top-4"
+        >
+          Saltar al contenido
+        </a>
         {/* Banner demo DevEps */}
         <div style={{
           position: "fixed",
@@ -92,7 +98,7 @@ export default function RootLayout({
           {/* padding-top para compensar el banner fijo (≈37px) */}
           <div style={{ paddingTop: "37px" }}>
             <Navbar />
-            <main className="flex-grow pt-0">{children}</main>
+            <main id="main-content" className="flex-grow pt-0">{children}</main>
             <Footer />
           </div>
         </SessionProvider>
