@@ -37,7 +37,6 @@ export default function ScrollRevealSection({
     reduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]
   );
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], reduceMotion ? [1, 1, 1] : [0.96, 1, 0.96]);
-
   return (
     <section
       ref={containerRef}
@@ -49,7 +48,10 @@ export default function ScrollRevealSection({
       <div className="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Text Content */}
         <motion.div
-          style={{ opacity }}
+          initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeOut" }}
           className={cn(
             "z-10 px-1 py-4 sm:px-5 lg:py-8",
             alignment === "left" ? "md:order-2" : "md:order-1"
@@ -72,6 +74,10 @@ export default function ScrollRevealSection({
         {/* Image Content */}
         <motion.div
           style={{ y: yMove, scale, opacity }}
+          initial={reduceMotion ? false : { x: alignment === "left" ? -30 : 30 }}
+          whileInView={{ x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: reduceMotion ? 0 : 0.7, ease: "easeOut", delay: reduceMotion ? 0 : 0.1 }}
           className={cn(
             "group relative aspect-[5/4] overflow-hidden rounded-[2rem] shadow-[0_35px_90px_rgba(44,31,22,.18)] md:aspect-[4/3]",
             alignment === "left" ? "md:order-1" : "md:order-2"
